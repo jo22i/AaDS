@@ -1,7 +1,5 @@
 class array_deque:
-    mass = []
     capacity = 0
-    length = 0
 
     def __init__(self, size):
         if(size <= 0):
@@ -12,6 +10,8 @@ class array_deque:
         self.capacity = size
         self.length = 0
 
+        self.head = self.tail = 0
+
     def print(self):
         if(self.length == 0):
             print("empty")
@@ -20,7 +20,19 @@ class array_deque:
             print("error")
             return
 
-        print(" ".join(self.mass).rstrip())
+        if (self.length == 1):
+            print(self.mass[self.head])
+            return
+
+        answer = ""
+        index = self.head
+        while (index != self.tail + 1):
+            if (index == len(self.mass)):
+                index = 0
+            answer += (self.mass[index] + " ") if (self.mass[index] != "") else ""
+            index += 1
+        
+        print(answer.rstrip())
 
     def pushf(self, elem):
         if(self.capacity == 0):
@@ -30,11 +42,16 @@ class array_deque:
             print("overflow")
             return
         
-        for i in range(self.length, 0, -1):
-            self.mass[i] = self.mass[i-1]
-
-        self.mass[0] = elem
+        if (self.length == 0):
+            self.mass[self.head] = elem
+            self.length += 1
+            return
+        
         self.length += 1
+
+        self.head = (self.capacity - 1) if (self.head == 0) else (self.head - 1)
+        
+        self.mass[self.head] = elem
 
     def pushb(self, elem):
         if(self.capacity == 0):
@@ -44,8 +61,16 @@ class array_deque:
             print("overflow")
             return
         
-        self.mass[self.length] = elem
+        if (self.length == 0):
+            self.mass[self.head] = elem
+            self.length += 1
+            return
+
         self.length += 1
+
+        self.tail = (0) if (self.tail == self.capacity - 1) else (self.tail + 1)
+
+        self.mass[self.tail] = elem
         
     def popb(self):
         if(self.capacity == 0):
@@ -55,10 +80,15 @@ class array_deque:
             print("underflow")
             return
         
-        print(self.mass[self.length-1])
-        
-        self.mass[self.length-1] = ""
         self.length -= 1
+        
+        if (self.length == 0):
+            print(self.mass[self.head])
+            return
+
+        print(self.mass[self.tail])
+
+        self.tail = (self.capacity - 1) if (self.tail == 0) else (self.tail - 1)
 
     def popf(self):
         if(self.capacity == 0):
@@ -67,14 +97,17 @@ class array_deque:
         elif(self.length == 0):
             print("underflow")
             return
-        
-        print(self.mass[0])
-        
-        for i in range(0, self.length-1):
-            self.mass[i] = self.mass[i+1]
-        
-        self.mass[self.length-1] = ""
+
         self.length -= 1
+
+        if (self.length == 0):
+            print(self.mass[self.head])
+            return
+        
+        print(self.mass[self.head])
+
+        self.head += 1
+        if (self.head == self.capacity): self.head = 0
 
 Deque = array_deque
 
