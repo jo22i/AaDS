@@ -1,4 +1,4 @@
-import fileinput
+import sys
 
 class array_deque:
     # Инициализация первоначального размера дэка для удобства детектирования
@@ -42,10 +42,12 @@ class array_deque:
         answer = ""
         index = self.head
         while (index != self.tail):
-            # Циклический переход из конца массива в начало
-            if (index == len(self.mass)):
-                index = 0
             answer += self.mass[index] + " "
+
+            if (index == len(self.mass) - 1):
+                index = 0
+                continue
+            
             index += 1
         else:
             # Перехват последнего элемента
@@ -144,15 +146,12 @@ class array_deque:
 
 # Инициализация пустого дэка и переменной для получения команд из командной строки
 Deque = array_deque
-line = ""
-
 # Цикл обработки команд из командной строки
-# while (True):
-for line in fileinput.input(): 
+for line in sys.stdin: 
     try:
-        # line = input()
+        line = line.rstrip('\n')
         # Пропуск пустых строк
-        if (line == ""):
+        if (line == "" or line == '\n'):
             continue
 
         # Получение списка команд с помощью разбиения строки по разделительному пробелу
@@ -168,15 +167,16 @@ for line in fileinput.input():
                     Deque.print()
                     continue
                 case "popf":
-                    print(Deque.popf())
+                    answer = Deque.popf()
+                    if (answer): print(answer)
                     continue
                 case "popb":
-                    print(Deque.popb())
+                    answer = Deque.popb()
+                    if (answer): print(answer)
                     continue
                 case _:
                     print("error")
                     continue
-        
 
         # Если нашли лишние пробелы во второй строке для команд - значит он лишний
         # и необходимо вывести сообщение об ошибке
@@ -208,8 +208,6 @@ for line in fileinput.input():
             continue
     # Данный тип ошибки возникнет при окончании ввода с консоли, 
     # который означает завершение программы
-    except EOFError:
-        break
     except:
         print("error")
         continue
