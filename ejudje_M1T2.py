@@ -1,3 +1,5 @@
+import fileinput
+
 class array_deque:
     # Инициализация первоначального размера дэка для удобства детектирования
     # попыток его повторной инициализации
@@ -145,9 +147,10 @@ Deque = array_deque
 line = ""
 
 # Цикл обработки команд из командной строки
-while (True):
+# while (True):
+for line in fileinput.input(): 
     try:
-        line = input()
+        # line = input()
         # Пропуск пустых строк
         if (line == ""):
             continue
