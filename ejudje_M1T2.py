@@ -4,12 +4,14 @@ class array_deque:
     # Инициализация первоначального размера дэка для удобства детектирования
     # попыток его повторной инициализации
     capacity = 0
+    nullable = False
 
     def __init__(self, size: int):
         # Проверка длины на неотрицательность и нуль
-        if (size <= 0):
+        if (size < 0):
             print("error")
             return
+        elif (size == 0): self.nullable = True
         
         # Установка размера дэка
         self.mass = [""]*size
@@ -25,11 +27,11 @@ class array_deque:
 
     def print(self):
         # Проверка на пустоту и возможный вызов функции при отсутствии инициализации дэка
-        if (self.length == 0):
-            print("empty")
-            return
-        elif (self.capacity == 0):
+        if (self.capacity == 0 and not self.nullable):
             print("error")
+            return
+        elif (self.length == 0):
+            print("empty")
             return
 
         # Если элемент всего один, то он и печатается
@@ -58,7 +60,7 @@ class array_deque:
 
     def pushf(self, elem: str):
         # Проверка на переполнение и возможный вызов функции при отсутствии инициализации дэка
-        if (self.capacity == 0):
+        if (self.capacity == 0 and not self.nullable):
             print("error")
             return
         elif (self.capacity == self.length):
@@ -78,7 +80,7 @@ class array_deque:
 
     def pushb(self, elem: str):
         # Проверка на переполнение и возможный вызов функции при отсутствии инициализации дэка
-        if (self.capacity == 0):
+        if (self.capacity == 0 and not self.nullable):
             print("error")
             return
         elif (self.capacity == self.length):
@@ -98,7 +100,7 @@ class array_deque:
         
     def popb(self):
         # Проверка на пустоту и возможный вызов функции при отсутствии инициализации дэка
-        if (self.capacity == 0):
+        if (self.capacity == 0 and not self.nullable):
             print("error")
             return
         elif (self.length == 0):
@@ -122,7 +124,7 @@ class array_deque:
 
     def popf(self):
         # Проверка на пустоту и возможный вызов функции при отсутствии инициализации дэка
-        if (self.capacity == 0):
+        if (self.capacity == 0 and not self.nullable):
             print("error")
             return
         elif (self.length == 0):
