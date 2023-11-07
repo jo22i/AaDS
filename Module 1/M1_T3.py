@@ -1,21 +1,29 @@
-vulnerables = []
-dependencies = []
-libs = dict()
+import sys
 
-vulnerables.extend(input().strip().split(" "))
-dependencies.extend(input().strip().split(" "))
+def SearchPaths(dep_lib: str):
+    global libs, vulnerables
 
-while(True):
-    try:
-        line = input().strip().split(" ", 1)
-        lib_name, lib_dependencies = line[0], line[1].split(" ")
-        libs[lib_name] = lib_dependencies
+    path = list()
+    
+    pass
 
-    except EOFError:
-        # break
-        for i in range(len(dependencies)):
-            if (dependencies[i] in vulnerables):
-                print(dependencies[i])
 
-# Do smth for finding dependecies
+vulnerables = list(input().strip().split())
+dependencies = list(input().strip().split())
 
+libs = dict(set())
+
+for line in sys.stdin:
+    line = line.strip('\n')
+    if (line == "" or line.find(" ") == 0): continue
+
+    lib_name, *lib_depends = line.split()
+    
+    for elem in lib_depends:
+        if libs.get(elem) is None:
+            libs[elem] = set(lib_name)
+        else:
+            libs[elem].add(lib_name)
+
+for elem in dependencies:
+    SearchPaths(elem)
