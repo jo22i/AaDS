@@ -14,13 +14,7 @@ class Slpay_Tree:
     def remove(self, key):
         pass
 
-    def remove(self, value):
-        pass
-
     def search(self, key):
-        pass
-    
-    def search(self, value):
         pass
 
     def min(self):
@@ -39,10 +33,16 @@ def RotateLeft():
 def RotateRigth():
     pass
 
-def ZigZig():
+def ZigZigLeft():
     pass
 
-def ZigZag():
+def ZigZigRight():
+    pass
+
+def ZigZagLeft():
+    pass
+
+def ZigZagRigth():
     pass
 
 def splay(Tree, X):

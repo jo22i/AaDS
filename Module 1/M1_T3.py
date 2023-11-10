@@ -11,7 +11,7 @@ def SearchPaths(dep_lib: str):
 vulnerables = list(input().strip().split())
 dependencies = list(input().strip().split())
 
-libs = dict(set())
+libs = dict()
 
 for line in sys.stdin:
     line = line.strip('\n')
