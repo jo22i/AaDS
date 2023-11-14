@@ -14,7 +14,7 @@ class Splay_Tree:
 
         while len(stack) != 0:
             elem = stack.pop(0)
-            if elem.key is None: continue
+            if elem is None: continue
 
             stack.append(elem.left)
             stack.append(elem.right)
