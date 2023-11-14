@@ -29,7 +29,7 @@ class Splay_Tree:
 
         while len(stack) != 0:
             elem = stack.pop(0)
-            if elem.key is None: continue
+            if elem is None: continue
 
             stack.append(elem.left)
             stack.append(elem.right)
@@ -82,10 +82,10 @@ class Splay_Tree:
 
     def RotateLeft(self, elem):
         e_parent = elem.parent
-        e_parent.left = elem.right
+        e_parent.right = elem.left
 
-        if elem.right is not None:
-            elem.right.parent = e_parent
+        if elem.left is not None:
+            elem.left.parent = e_parent
 
         if e_parent.parent is None:
             self = elem
@@ -98,6 +98,7 @@ class Splay_Tree:
         else:
             e_parent.parent.right = elem
 
+        elem.parent = e_parent.parent
         e_parent.parent = elem
         elem.left = e_parent
         return self
@@ -120,6 +121,7 @@ class Splay_Tree:
         else:
             e_parent.parent.right = elem
 
+        elem.parent = e_parent.parent
         elem.right = e_parent
         e_parent.parent = elem
         return self
