@@ -1,29 +1,29 @@
 import sys
+from collections import defaultdict
 
-def SearchPaths(dep_lib: str):
-    global libs, vulnerables
+def SearchPaths(dep_lib: str, current_path: list):
+    current_path = [dep_lib] + current_path 
+    if dep_lib in dependencies:
+        print(' '.join(current_path))
 
-    path = list()
-    
-    pass
+    if dep_lib in libs:
+        for lib in libs[dep_lib]:
+            if lib not in current_path:
+                SearchPaths(lib, current_path)
 
 
-vulnerables = list(input().strip().split())
-dependencies = list(input().strip().split())
+vulnerables = set(input().split())
+dependencies = set(input().split())
 
-libs = dict()
+libs = defaultdict(set)
 
 for line in sys.stdin:
     line = line.strip('\n')
-    if (line == "" or line.find(" ") == 0): continue
-
-    lib_name, *lib_depends = line.split()
-    
-    for elem in lib_depends:
-        if libs.get(elem) is None:
-            libs[elem] = set(lib_name)
-        else:
+    if line:
+        lib_name, *lib_depends = line.split()
+        
+        for elem in lib_depends:
             libs[elem].add(lib_name)
 
-for elem in dependencies:
-    SearchPaths(elem)
+for elem in vulnerables:
+    SearchPaths(elem, [])
