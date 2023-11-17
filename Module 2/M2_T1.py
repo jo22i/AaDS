@@ -72,13 +72,39 @@ class Splay_Tree:
                 return self
 
     def set(self, key, value):
-        pass
+        current_elem = self
+        
+        while True:
+            if (current_elem.key == key):
+                current_elem.value = value
+                return
+            elif (current_elem is None):
+                print("error")
+                return
+            else:
+                if (key > current_elem.key):
+                    current_elem = current_elem.right
+                else:
+                    current_elem = current_elem.left
+
 
     def remove(self, key):
         pass
 
     def search(self, key):
-        pass
+        current_elem = self
+        
+        while True:
+            if (current_elem.key == key):
+                return current_elem
+            elif (current_elem is None):
+                print("error")
+                return None
+            else:
+                if (key > current_elem.key):
+                    current_elem = current_elem.right
+                else:
+                    current_elem = current_elem.left
 
     def RotateLeft(self, elem):
         e_parent = elem.parent
@@ -203,7 +229,7 @@ for line in sys.stdin:
                     else:
                         print("0")
                 case "delete":
-                    ST.remove(int(args[0]))
+                    answer = ST.remove(int(args[0]))
                 case _:
                     print("error")
         elif len(args) == 2:
